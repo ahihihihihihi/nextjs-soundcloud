@@ -20,6 +20,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Container from '@mui/material/Container';
 import { Avatar } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
+import Link from 'next/link'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -106,6 +107,10 @@ export default function AppHeader() {
             PaperProps={{
                 elevation: 0,
                 sx: {
+                    "a": {
+                        color: "unset",
+                        textDecoration: "none"
+                    },
                     overflow: 'visible',
                     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                     mt: 1.5,
@@ -130,8 +135,10 @@ export default function AppHeader() {
                 },
             }}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem>
+                <Link href={"/profile"}>Profile</Link>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
         </Menu>
     );
 
@@ -203,7 +210,15 @@ export default function AppHeader() {
                             component="div"
                             sx={{ display: { xs: 'none', sm: 'block' } }}
                         >
-                            SOUND CLOUD
+                            <Link
+                                href={"/"}
+                                style={{
+                                    color: "unset",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                SOUND CLOUD
+                            </Link>
                         </Typography>
                         <Search>
                             <SearchIconWrapper>
@@ -219,10 +234,14 @@ export default function AppHeader() {
                             display: { xs: 'none', md: 'flex' },
                             alignItems: "center",
                             gap: "20px",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            " > a": {
+                                color: "unset",
+                                textDecoration: "none"
+                            }
                         }}>
-                            <span>Playlists</span>
-                            <span>Likes</span>
+                            <Link href={"/playlist"}>Playlists</Link>
+                            <Link href={"/likes"}>Likes</Link>
                             <span>Upload</span>
                             <Avatar
                                 sx={{ bgcolor: deepOrange[500] }}
