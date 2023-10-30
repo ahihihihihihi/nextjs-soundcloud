@@ -21,6 +21,7 @@ import Container from '@mui/material/Container';
 import { Avatar } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -194,6 +195,12 @@ export default function AppHeader() {
         </Menu>
     );
 
+    const router = useRouter()
+
+    const handleRedirectHome = () => {
+        router.push("/");
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
@@ -208,17 +215,13 @@ export default function AppHeader() {
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' } }}
+                            onClick={() => handleRedirectHome()}
+                            sx={{
+                                display: { xs: 'none', sm: 'block' },
+                                cursor: "pointer"
+                            }}
                         >
-                            <Link
-                                href={"/"}
-                                style={{
-                                    color: "unset",
-                                    textDecoration: "none",
-                                }}
-                            >
-                                SOUND CLOUD
-                            </Link>
+                            SOUND CLOUD
                         </Typography>
                         <Search>
                             <SearchIconWrapper>
@@ -241,7 +244,7 @@ export default function AppHeader() {
                             }
                         }}>
                             <Link href={"/playlist"}>Playlists</Link>
-                            <Link href={"/likes"}>Likes</Link>
+                            <Link href={"/like"}>Likes</Link>
                             <span>Upload</span>
                             <Avatar
                                 sx={{ bgcolor: deepOrange[500] }}
