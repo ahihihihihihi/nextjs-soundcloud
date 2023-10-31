@@ -7,7 +7,7 @@ import 'react-h5-audio-player/lib/styles.css';
 
 
 const AppFooter = () => {
-
+    console.log(">>> check env: FOOTER | ", process.env.NEXT_PUBLIC_BACKEND_URL)
     const hasMounted = useHasMounted();
 
     if (!hasMounted) {
