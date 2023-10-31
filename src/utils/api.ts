@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-export const sendRequestJS = async (props) => {
+export const sendRequest = async <T>(props: IRequest) => {
     let {
         url,
         method = 'GET',
@@ -11,7 +11,7 @@ export const sendRequestJS = async (props) => {
         nextOption = {}
     } = props;
 
-    const options = {
+    const options: any = {
         method: method,
         // by default setting the content-type to be json type
         headers: new Headers({ 'content-type': 'application/json', ...headers }),
@@ -26,7 +26,7 @@ export const sendRequestJS = async (props) => {
 
     return fetch(url, options).then(res => {
         if (res.ok) {
-            return res.json();
+            return res.json() as T;
         } else {
             return res.json().then(function (json) {
                 // to be able to access error status when you catch the error 
@@ -34,7 +34,7 @@ export const sendRequestJS = async (props) => {
                     statusCode: res.status,
                     message: json?.message ?? "",
                     error: json?.error ?? ""
-                };
+                } as T;
             });
         }
     });
