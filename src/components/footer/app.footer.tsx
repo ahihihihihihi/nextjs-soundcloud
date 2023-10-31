@@ -7,7 +7,7 @@ import 'react-h5-audio-player/lib/styles.css';
 
 
 const AppFooter = () => {
-    console.log(">>> check env: FOOTER | ", process.env.NEXT_PUBLIC_BACKEND_URL)
+    // console.log(">>> check env: FOOTER | ", process.env.NEXT_PUBLIC_BACKEND_URL)
     const hasMounted = useHasMounted();
 
     if (!hasMounted) {
@@ -29,7 +29,7 @@ const AppFooter = () => {
                 gap: '10px',
             }}>
                 <AudioPlayer
-                    src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/hoidanit.mp3`}
                     volume={0.5}
                     style={{
                         backgroundColor: '#f2f2f2',
