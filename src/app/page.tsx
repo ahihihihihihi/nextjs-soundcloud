@@ -36,12 +36,15 @@ export default async function HomePage() {
   return (
     <Container>
       <MainSlider
+        title={'chill top'}
         data={chills?.data ?? []}
       />
       <MainSlider
+        title={'workout top'}
         data={workouts?.data ?? []}
       />
       <MainSlider
+        title={'party top'}
         data={parties?.data ?? []}
       />
     </Container>
