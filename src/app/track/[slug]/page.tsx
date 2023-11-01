@@ -1,6 +1,7 @@
 'use client'
 import WaveTrack from '@/components/track/wave.track'
 import { useSearchParams } from 'next/navigation'
+import Container from '@mui/material/Container'
 
 
 const DetailTrackPage = (props: any) => {
@@ -13,12 +14,12 @@ const DetailTrackPage = (props: any) => {
 
 
     return (
-        <div>
+        <Container>
             Detail Track Page
             <div>
                 <WaveTrack />
             </div>
-        </div>
+        </Container>
     )
 }
 
