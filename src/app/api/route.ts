@@ -1,8 +1,10 @@
+import { NextRequest } from "next/server"
 
 
+export async function GET(request: NextRequest) {
+    const url = new URL(request.url);
+    const searchParams = new URLSearchParams(url.search);
+    const fileName = searchParams.get('audio')
 
-export async function GET() {
-    console.log(">>>check server")
-
-    return Response.json({ data: 'hoidanit' })
+    return await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${fileName}`)
 }
