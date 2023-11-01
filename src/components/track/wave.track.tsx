@@ -66,6 +66,10 @@ const WaveTrack = () => {
 
         const timeEl = document.querySelector('#time')!;
         const durationEl = document.querySelector('#duration')!;
+        const hover = document.querySelector('#hover')
+        const waveform = containerRef.current
+        // @ts-ignore
+        waveform.addEventListener('pointermove', (e) => (hover.style.width = `${e.offsetX}px`))
 
         const subscriptions = [
             wavesurfer.on('play', () => setIsPlaying(true)),
@@ -87,11 +91,11 @@ const WaveTrack = () => {
     }
 
     return (
-        <div>
+        <div style={{ marginTop: 50 }}>
             <div ref={containerRef} className='wave-form-container'>
-                Wave Track Detail!
                 <div id="time">0:00</div>
                 <div id="duration">0:00</div>
+                <div id="hover"></div>
             </div>
             <button onClick={() => onPlayClick()}>
                 {isPlaying ? 'Pause' : 'Play'}
