@@ -18,14 +18,14 @@ export const useWavesurfer = (
     containerRef: React.RefObject<HTMLDivElement>,
     options: Omit<WaveSurferOptions, 'container'>,
 ) => {
-    const [wavesurfer, setWavesurfer] = useState(null)
+    const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null)
 
     // Initialize wavesurfer when the container mounts
     // or any of the props change
     useEffect(() => {
         if (!containerRef.current) return
 
-        const ws: any = WaveSurfer.create({
+        const ws: WaveSurfer = WaveSurfer.create({
             ...options,
             container: containerRef.current,
         })
