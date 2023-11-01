@@ -1,8 +1,6 @@
 'use client'
 import WaveTrack from '@/components/track/wave.track'
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
-
 
 
 const DetailTrackPage = (props: any) => {
