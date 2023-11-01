@@ -40,12 +40,11 @@ const WaveTrack = () => {
 
     const fileName = searchParams.get('audio')
 
-    // re-render infinity because use useState in useEffect
-    // const options = {
+    // const [options, setOptions] = useState({
     //     waveColor: 'rgb(200, 0, 200)',
     //     progressColor: 'rgb(100, 0, 100)',
     //     url: `/api?audio=${fileName}`,
-    // }
+    // })
 
     const optionsMemo = useMemo(() => {
         return (
@@ -57,24 +56,8 @@ const WaveTrack = () => {
         )
     }, [])
 
+    // const wavesurfer: any = useWavesurfer(containerRef, options);
     const wavesurfer: any = useWavesurfer(containerRef, optionsMemo);
-
-    // useEffect(() => {
-    //     const wavesurfer = WaveSurfer.create({
-    //         container: containerRef.current!,
-    //         waveColor: 'rgb(200, 0, 200)',
-    //         progressColor: 'rgb(100, 0, 100)',
-    //         url: `/api?audio=${fileName}`,
-    //     })
-
-    //     wavesurfer.on('click', () => {
-    //         wavesurfer.play()
-    //     })
-
-    //     return () => {
-    //         wavesurfer.destroy()
-    //     }
-    // }, [])
 
     return (
         <div ref={containerRef}>
