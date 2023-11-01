@@ -8,6 +8,7 @@ import Button from "@mui/material/Button/Button";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
+import Link from "next/link";
 
 interface IProps {
     data: ITrackTop[],
@@ -15,7 +16,7 @@ interface IProps {
 }
 
 const MainSlider = (props: IProps) => {
-    console.log(">>>check props: ", props);
+    // console.log(">>>check props: ", props);
     const { title, data } = props;
     const NextArrow = (props: any) => {
         return (
@@ -91,7 +92,7 @@ const MainSlider = (props: IProps) => {
                         return (
                             <div className="track" key={track._id}>
                                 <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} />
-                                <h4>{track.title}</h4>
+                                <Link href={`/track/${track._id}`}><h4>{track.title}</h4></Link>
                                 <h5>{track.description}</h5>
                             </div>
                         )
