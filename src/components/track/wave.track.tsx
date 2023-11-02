@@ -42,7 +42,7 @@ const WaveTrack = () => {
             // Define the progress gradient
             progressGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 1.35)
             progressGradient.addColorStop(0, '#EE772F') // Top color
-            progressGradient.addColorStop((canvas.height * 0.7) / canvas.height, '#EB4926') // Top color
+            progressGradient.addColorStop((canvas.height * 0.7) / canvas.height, '#EE772F') // Top color
             progressGradient.addColorStop((canvas.height * 0.7 + 1) / canvas.height, '#ffffff') // White line
             progressGradient.addColorStop((canvas.height * 0.7 + 2) / canvas.height, '#ffffff') // White line
             progressGradient.addColorStop((canvas.height * 0.7 + 3) / canvas.height, '#F6B094') // Bottom color
@@ -53,7 +53,8 @@ const WaveTrack = () => {
             {
                 waveColor: gradient,
                 progressColor: progressGradient,
-                barWidth: 2,
+                height: 100,
+                barWidth: 3,
                 url: `/api?audio=${fileName}`,
             }
         )
@@ -106,6 +107,15 @@ const WaveTrack = () => {
                 <div ref={timeRef} className="time">0:00</div>
                 <div ref={durationRef} className="duration">0:00</div>
                 <div ref={hoverRef} className="hover-wave"></div>
+                <div className="overlay"
+                    style={{
+                        position: "absolute",
+                        height: "30px",
+                        width: "100%",
+                        bottom: "0",
+                        background: "#ccc"
+                    }}
+                ></div>
             </div>
             <button onClick={() => onPlayClick()}>
                 {isPlaying ? 'Pause' : 'Play'}
