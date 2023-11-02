@@ -144,7 +144,7 @@ export default function AppHeader() {
             <MenuItem>
                 <Link href={"/profile"}>Profile</Link>
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
+            <MenuItem><Link href={"/api/auth/signout"}>Log out</Link></MenuItem>
         </Menu>
     );
 
