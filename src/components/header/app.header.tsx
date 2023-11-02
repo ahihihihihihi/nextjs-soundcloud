@@ -22,6 +22,7 @@ import { Avatar } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useSession } from "next-auth/react"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -65,6 +66,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function AppHeader() {
+    const { data: session } = useSession();
+    // console.log(">>> check session:", session);
+    // console.log(">>> check useSession:", useSession());
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -243,15 +248,24 @@ export default function AppHeader() {
                                 textDecoration: "none"
                             }
                         }}>
-                            <Link href={"/playlist"}>Playlists</Link>
-                            <Link href={"/like"}>Likes</Link>
-                            <span>Upload</span>
-                            <Avatar
-                                sx={{ bgcolor: deepOrange[500] }}
-                                onClick={handleProfileMenuOpen}
-                            >
-                                DT
-                            </Avatar>
+                            {
+                                session ?
+                                    <>
+                                        <Link href={"/playlist"}>Playlists</Link>
+                                        <Link href={"/like"}>Likes</Link>
+                                        <span>Upload</span>
+                                        <Avatar
+                                            sx={{ bgcolor: deepOrange[500] }}
+                                            onClick={handleProfileMenuOpen}
+                                        >
+                                            DT
+                                        </Avatar>
+                                    </>
+                                    :
+                                    <>
+                                        <Link href={"/api/auth/signin"}>Login</Link>
+                                    </>
+                            }
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
