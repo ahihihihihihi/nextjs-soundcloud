@@ -1,3 +1,5 @@
+import AuthSignIn from "@/components/auth/auth.signin"
+import '@/styles/app.css'
 
 
 
@@ -5,7 +7,7 @@ const SignInPage = () => {
 
     return (
         <>
-            sign in page
+            <AuthSignIn />
         </>
     )
 }
