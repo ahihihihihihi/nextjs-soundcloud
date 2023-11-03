@@ -16,14 +16,16 @@ export const authOptions: AuthOptions = {
         async jwt({ token, user, account, profile, trigger }) {
             if (trigger === 'signIn' && account?.provider === 'github') {
                 //todo
-                token.address = 'hoi dan it';
+                token.access_token = 'USER';
+
             }
 
             return token
         },
         async session({ session, token, user }) {
-            //@ts-ignore
-            session.address = token.address
+
+            session.access_token = token.access_token
+
             return session
         },
 
