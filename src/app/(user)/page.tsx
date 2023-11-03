@@ -2,7 +2,7 @@ import MainSlider from "@/components/main/main.slider";
 import { Container } from "@mui/material";
 import { sendRequest } from "@/utils/api";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/(user)/api/auth/[...nextauth]/route";
 
 
 export default async function HomePage() {
