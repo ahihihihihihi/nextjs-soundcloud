@@ -22,7 +22,7 @@ import { Avatar } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useSession } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -67,7 +67,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function AppHeader() {
     const { data: session } = useSession();
-    // console.log(">>> check session:", session);
+    console.log(">>> check session:", session);
     // console.log(">>> check useSession:", useSession());
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -88,6 +88,7 @@ export default function AppHeader() {
     const handleMenuClose = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
+        signOut();
     };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -144,7 +145,7 @@ export default function AppHeader() {
             <MenuItem>
                 <Link href={"/profile"}>Profile</Link>
             </MenuItem>
-            <MenuItem><Link href={"/api/auth/signout"}>Log out</Link></MenuItem>
+            <MenuItem><a onClick={() => handleMenuClose()} href={"#"}>Log out</a></MenuItem>
         </Menu>
     );
 
@@ -263,7 +264,7 @@ export default function AppHeader() {
                                     </>
                                     :
                                     <>
-                                        <Link href={"/api/auth/signin"}>Login</Link>
+                                        <a onClick={() => signIn()} href={"#"}>Login</a>
                                     </>
                             }
                         </Box>
