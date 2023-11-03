@@ -24,6 +24,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession, signIn, signOut } from "next-auth/react"
 
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -69,7 +70,11 @@ export default function AppHeader() {
     const { data: session } = useSession();
     console.log(">>> check session:", session);
     // console.log(">>> check useSession:", useSession());
+    const router = useRouter()
 
+    const handleRedirectHome = () => {
+        router.push("/");
+    }
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -201,11 +206,7 @@ export default function AppHeader() {
         </Menu>
     );
 
-    const router = useRouter()
 
-    const handleRedirectHome = () => {
-        router.push("/");
-    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>

@@ -10,8 +10,12 @@ import IconButton from '@mui/material/IconButton';
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useRouter } from 'next/navigation'
 
 const AuthSignIn = (props: any) => {
+    const router = useRouter()
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [username, setUsername] = useState<string>("");
@@ -24,7 +28,7 @@ const AuthSignIn = (props: any) => {
     const [errorPassword, setErrorPassword] = useState<string>("");
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setIsErrorUsername(false);
         setIsErrorPassword(false);
         setErrorUsername("");
@@ -40,7 +44,24 @@ const AuthSignIn = (props: any) => {
             setErrorPassword("Password is not empty.")
             return;
         }
-        console.log(">>> check username: ", username, ' pass: ', password)
+
+        const res = await signIn('credentials', {
+            username: username,
+            password: password,
+            redirect: false
+        })
+        console.log(">>>check res signIn credentials:", res)
+        if (!res?.error) {
+            // console.log(">>>check history length:", history.length);
+            if (history.length === 2) {
+                router.push('/')
+            } else {
+                router.back()
+            }
+        } else {
+            alert(res.error)
+        }
+
     }
 
     return (
@@ -70,6 +91,9 @@ const AuthSignIn = (props: any) => {
                     }}
                 >
                     <div style={{ margin: "20px" }}>
+                        <Link href={'/'}>
+                            <ArrowBackIcon />
+                        </Link>
                         <Box sx={{
                             display: "flex",
                             justifyContent: "center",
