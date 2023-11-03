@@ -9,6 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const AuthSignIn = (props: any) => {
 
@@ -144,6 +145,7 @@ const AuthSignIn = (props: any) => {
                                     cursor: "pointer",
                                     bgcolor: "orange"
                                 }}
+                                onClick={() => signIn("github")}
                             >
                                 <GitHubIcon titleAccess="Login with Github" />
                             </Avatar>
