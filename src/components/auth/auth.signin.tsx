@@ -8,11 +8,13 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useRouter } from 'next/navigation'
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const AuthSignIn = (props: any) => {
     const router = useRouter()
@@ -27,6 +29,8 @@ const AuthSignIn = (props: any) => {
     const [errorUsername, setErrorUsername] = useState<string>("");
     const [errorPassword, setErrorPassword] = useState<string>("");
 
+    const [openMessage, setOpenMessage] = useState<boolean>(false);
+    const [resMessage, setResMessage] = useState<string>("");
 
     const handleSubmit = async () => {
         setIsErrorUsername(false);
@@ -59,10 +63,25 @@ const AuthSignIn = (props: any) => {
                 router.back()
             }
         } else {
-            alert(res.error)
+            setOpenMessage(true)
+            setResMessage(res.error)
         }
 
     }
+
+    const pressEnter = (event: any) => {
+        // console.log(">>>check event:", event)
+        if (event.key === "Enter") {
+            handleSubmit()
+        }
+    }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setOpenMessage(false)
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, [openMessage]);
 
     return (
         <Box
@@ -122,6 +141,7 @@ const AuthSignIn = (props: any) => {
                             autoFocus
                             error={isErrorUsername}
                             helperText={errorUsername}
+                            onKeyDown={(event) => pressEnter(event)}
                         />
                         <TextField
                             onChange={(event) => setPassword(event.target.value)}
@@ -134,6 +154,7 @@ const AuthSignIn = (props: any) => {
                             type={showPassword ? "text" : "password"}
                             error={isErrorPassword}
                             helperText={errorPassword}
+                            onKeyDown={(event) => pressEnter(event)}
 
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
@@ -186,7 +207,18 @@ const AuthSignIn = (props: any) => {
                     </div>
                 </Grid>
             </Grid>
-
+            <Snackbar
+                open={openMessage}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={() => setOpenMessage(false)}
+                    severity="error"
+                    sx={{ width: '100%' }}
+                >
+                    {resMessage}
+                </Alert>
+            </Snackbar>
         </Box>
 
     )
