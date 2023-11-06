@@ -26,7 +26,7 @@ declare global {
 
     interface IRequest {
         url: string;
-        method: string;
+        method?: string;
         body?: { [key: string]: any };
         queryParams?: any;
         useCredentials?: boolean;
