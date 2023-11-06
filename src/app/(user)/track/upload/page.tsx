@@ -1,4 +1,4 @@
-import UploadTabs from "@/components/track/upload.tabs";
+import UploadTabs from "@/components/track/upload/upload.tabs";
 import Container from "@mui/material/Container/Container";
 
 
