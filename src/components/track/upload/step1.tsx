@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useSession } from "next-auth/react"
 import { sendRequestFile } from '@/utils/api';
+import axios from 'axios';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -45,14 +46,32 @@ const Step1 = () => {
             // console.log(">>> check audio", audio)
             const formData = new FormData()
             formData.append('fileUpload', audio)
-            const chills = await sendRequestFile<IBackendRes<ITrackTop[]>>({
-                url: 'http://localhost:8000/api/v1/files/upload',
-                body: formData,
-                headers: {
-                    'Authorization': `Bearer ${session?.access_token}`,
-                    'target_type': 'tracks'
-                },
-            })
+
+            // const chills = await sendRequestFile<IBackendRes<ITrackTop[]>>({
+            //     url: 'http://localhost:8000/api/v1/files/upload',
+            //     body: formData,
+            //     headers: {
+            //         'Authorization': `Bearer ${session?.access_token}`,
+            //         'target_type': 'tracks'
+            //     },
+            // })
+
+            try {
+                const res = await axios.post(
+                    'http://localhost:8000/api/v1/files/upload',
+                    formData,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${session?.access_token}`,
+                            'target_type': 'tracks'
+                        },
+                    }
+                )
+                // console.log(">>>check res:", res.data.data.fileName)
+            } catch (e) {
+                //@ts-ignore
+                alert(e?.response?.data?.message)
+            }
         }
         // console.log(">>> check acceptedFiles", acceptedFiles)
     }, [session])
