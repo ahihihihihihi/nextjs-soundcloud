@@ -18,8 +18,8 @@ const AppFooter = () => {
         )
     }
 
-    const { color } = useContext(TrackContext)
-    console.log(">>>check track context:", color)
+    const { currentTrack, setCurrentTrack } = useContext(TrackContext) as ITrackContext
+    console.log(">>>check track context:", currentTrack)
 
 
 
