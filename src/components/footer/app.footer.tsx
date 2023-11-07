@@ -3,6 +3,8 @@ import { useHasMounted } from "@/utils/customHook";
 import { AppBar, Container } from "@mui/material";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import { useContext } from 'react'
+import { TrackContext } from "@/lib/track.wrapper";
 
 
 
@@ -15,6 +17,12 @@ const AppFooter = () => {
             <></> //fragment
         )
     }
+
+    const { color } = useContext(TrackContext)
+    console.log(">>>check track context:", color)
+
+
+
     return (
         <div style={{ marginTop: 50 }}>
             <AppBar
