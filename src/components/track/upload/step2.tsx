@@ -10,6 +10,8 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MenuItem from '@mui/material/MenuItem';
+import axios from 'axios';
+import { useSession } from "next-auth/react"
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -24,9 +26,44 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-function InputFileUpload() {
+function InputFileUpload(props: any) {
+    const { data: session } = useSession();
+    const { setInfo, info } = props;
+
+    const handleUpload = async (image: any) => {
+        const formData = new FormData()
+        formData.append('fileUpload', image)
+
+        try {
+            const res = await axios.post(
+                'http://localhost:8000/api/v1/files/upload',
+                formData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${session?.access_token}`,
+                        'target_type': 'images',
+                    },
+                }
+            )
+            setInfo({
+                ...info,
+                imgUrl: res.data.data.fileName,
+            })
+
+        } catch (e) {
+            //@ts-ignore
+            alert(e?.response?.data?.message)
+        }
+    }
+
     return (
         <Button
+            onChange={(e) => {
+                const event = e.target as HTMLInputElement;
+                if (event.files) {
+                    handleUpload(event.files[0])
+                }
+            }}
             component="label" variant="contained" startIcon={<CloudUploadIcon />}>
             Upload file
             <VisuallyHiddenInput type="file" />
@@ -100,7 +137,6 @@ const Step2 = (props: IProps) => {
         imgUrl: "",
         category: "",
     })
-    console.log(">>> check info:", info)
 
     React.useEffect(() => {
         if (trackUpload && trackUpload.uploadedTrackName) {
@@ -110,6 +146,10 @@ const Step2 = (props: IProps) => {
             })
         }
     }, [trackUpload])
+
+    const handleSubmitForm = () => {
+        console.log(">>> check info:", info)
+    }
 
     return (
         <>
@@ -134,12 +174,21 @@ const Step2 = (props: IProps) => {
                 >
                     <div style={{ height: 250, width: 250, background: "#ccc" }}>
                         <div>
-
+                            {info.imgUrl &&
+                                <img
+                                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${info.imgUrl}`}
+                                    height={250}
+                                    width={250}
+                                />
+                            }
                         </div>
 
                     </div>
                     <div >
-                        <InputFileUpload />
+                        <InputFileUpload
+                            setInfo={setInfo}
+                            info={info}
+                        />
                     </div>
 
                 </Grid>
@@ -179,6 +228,7 @@ const Step2 = (props: IProps) => {
                         ))}
                     </TextField>
                     <Button
+                        onClick={() => handleSubmitForm()}
                         variant="outlined"
                         sx={{
                             mt: 5
