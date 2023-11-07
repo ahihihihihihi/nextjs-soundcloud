@@ -43,7 +43,12 @@ export const Toast: FC<ToastProps> = ({
             autoHideDuration={autoHideDuration ?? 5000}
             {...props}
         >
-            <Alert severity={message.severity}>{message.message}</Alert>
+            <Alert
+                severity={message.severity}
+                onClose={handleClose}
+            >
+                {message.message}
+            </Alert>
         </Snackbar>
     )
 }
