@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Step1 from './step1';
 import Step2 from './step2';
@@ -52,8 +51,8 @@ const UploadTabs = () => {
         <Box sx={{ width: '100%', mt: 3, border: '1px solid #ccc' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Tracks" />
-                    <Tab label="Basic Infomation" />
+                    <Tab label="Tracks" disabled={value !== 0} />
+                    <Tab label="Basic Infomation" disabled={value !== 1} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -66,6 +65,7 @@ const UploadTabs = () => {
             <CustomTabPanel value={value} index={1}>
                 <Step2
                     trackUpload={trackUpload}
+                    setValue={setValue}
                 />
             </CustomTabPanel>
         </Box>

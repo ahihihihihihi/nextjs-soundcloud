@@ -6,8 +6,8 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useSession } from "next-auth/react"
-import { sendRequestFile } from '@/utils/api';
 import axios from 'axios';
+import { useToast } from '@/utils/toast';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -45,6 +45,8 @@ interface IProps {
 const Step1 = (props: IProps) => {
     const { data: session } = useSession();
 
+    const toast = useToast()
+
     const { trackUpload } = props;
 
     const onDrop = useCallback(async (acceptedFiles: FileWithPath[]) => {
@@ -64,7 +66,7 @@ const Step1 = (props: IProps) => {
                         headers: {
                             'Authorization': `Bearer ${session?.access_token}`,
                             'target_type': 'tracks',
-                            delay: 5000
+                            // delay: 5000
                         },
                         onUploadProgress: progressEvent => {
                             let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total!);
@@ -84,7 +86,8 @@ const Step1 = (props: IProps) => {
                 // console.log(">>>check res:", res.data.data.fileName)
             } catch (e) {
                 //@ts-ignore
-                alert(e?.response?.data?.message)
+                toast.error(e?.response?.data?.message)
+                // alert(e?.response?.data?.message)
             }
         }
         // console.log(">>> check acceptedFiles", acceptedFiles)

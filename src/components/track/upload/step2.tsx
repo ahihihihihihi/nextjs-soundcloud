@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useSession } from "next-auth/react"
 import { sendRequest } from '@/utils/api';
+import { useToast } from '@/utils/toast';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -119,6 +120,7 @@ interface IProps {
         percent: number,
         uploadedTrackName: string,
     }
+    setValue: (v: number) => void
 }
 
 interface INewTrack {
@@ -131,7 +133,8 @@ interface INewTrack {
 
 const Step2 = (props: IProps) => {
     const { data: session } = useSession();
-    const { trackUpload } = props
+    const toast = useToast()
+    const { trackUpload, setValue } = props
     const [info, setInfo] = React.useState<INewTrack>({
         title: "",
         description: "",
@@ -161,9 +164,12 @@ const Step2 = (props: IProps) => {
             body: info
         })
         if (res.data) {
-            alert("create a track successfully!")
+            // alert("create a track successfully!")
+            toast.success("create a track successfully!")
+            setValue(0)
         } else {
-            alert(res.message)
+            // alert(res.message)
+            toast.error(res.message)
         }
     }
 
@@ -175,6 +181,7 @@ const Step2 = (props: IProps) => {
                 </div>
                 <LinearWithValueLabel
                     trackUpload={trackUpload}
+                    setValue={setValue}
                 />
             </div>
 
