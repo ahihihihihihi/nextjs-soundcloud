@@ -38,11 +38,14 @@ function InputFileUpload() {
 
 interface IProps {
     setValue: (v: number) => void,
-    setTrackUpload: any
+    setTrackUpload: any,
+    trackUpload: any
 }
 
 const Step1 = (props: IProps) => {
     const { data: session } = useSession();
+
+    // const { trackUpload } = props;
 
     const onDrop = useCallback(async (acceptedFiles: FileWithPath[]) => {
         // Do something with the files
@@ -66,12 +69,19 @@ const Step1 = (props: IProps) => {
                         onUploadProgress: progressEvent => {
                             let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total!);
                             props.setTrackUpload({
+                                uploadedTrackName: "",
                                 fileName: audio.name,
                                 percent: percentCompleted
                             })
                         }
                     }
                 )
+                props.setTrackUpload({
+                    fileName: audio.name,
+                    percent: 100,
+                    uploadedTrackName: res.data.data.fileName,
+                })
+
                 // console.log(">>>check res:", res.data.data.fileName)
             } catch (e) {
                 //@ts-ignore
