@@ -16,39 +16,48 @@ const AppFooter = () => {
         )
     }
     return (
-        <AppBar
-            position="fixed"
-            sx={{
-                top: 'auto',
-                bottom: 0,
-                backgroundColor: '#f2f2f2'
-            }}
-        >
-            <Container sx={{
-                display: 'flex',
-                gap: '10px',
-            }}>
-                <AudioPlayer
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/hoidanit.mp3`}
-                    volume={0.5}
-                    style={{
-                        backgroundColor: '#f2f2f2',
-                        boxShadow: 'unset',
-                    }}
-                />
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'start',
-                    minWidth: 100
+        <div style={{ marginTop: 50 }}>
+            <AppBar
+                position="fixed"
+                sx={{
+                    top: 'auto',
+                    bottom: 0,
+                    backgroundColor: '#f2f2f2',
                 }}
-                >
-                    <div style={{ color: '#ccc' }}>Alex</div>
-                    <div style={{ color: 'black' }}>Who are you?</div>
-                </div>
-            </Container>
-        </AppBar>
+            >
+                <Container sx={{
+                    display: 'flex',
+                    gap: '10px',
+                    '.rhap_main': {
+                        gap: '30px',
+                        '.rhap_controls-section': {
+                            gap: '10px',
+                        }
+                    }
+                }}>
+                    <AudioPlayer
+                        layout="horizontal-reverse"
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/hoidanit.mp3`}
+                        volume={0.5}
+                        style={{
+                            backgroundColor: '#f2f2f2',
+                            boxShadow: 'unset',
+                        }}
+                    />
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'start',
+                        minWidth: 100
+                    }}
+                    >
+                        <div style={{ color: '#ccc' }}>Alex</div>
+                        <div style={{ color: 'black' }}>Who are you?</div>
+                    </div>
+                </Container>
+            </AppBar>
+        </div>
     )
 }
 
