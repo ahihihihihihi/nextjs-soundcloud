@@ -12,6 +12,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useSession } from "next-auth/react"
+import { sendRequest } from '@/utils/api';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -129,6 +130,7 @@ interface INewTrack {
 }
 
 const Step2 = (props: IProps) => {
+    const { data: session } = useSession();
     const { trackUpload } = props
     const [info, setInfo] = React.useState<INewTrack>({
         title: "",
@@ -147,8 +149,22 @@ const Step2 = (props: IProps) => {
         }
     }, [trackUpload])
 
-    const handleSubmitForm = () => {
-        console.log(">>> check info:", info)
+    const handleSubmitForm = async () => {
+        // console.log(">>> check info:", info)
+        const res = await sendRequest<IBackendRes<ITrackTop[]>>({
+            url: 'http://localhost:8000/api/v1/tracks',
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${session?.access_token}`,
+            },
+            // body: { ...info }
+            body: info
+        })
+        if (res.data) {
+            alert("create a track successfully!")
+        } else {
+            alert(res.message)
+        }
     }
 
     return (
