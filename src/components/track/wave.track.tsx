@@ -33,6 +33,8 @@ const WaveTrack = (props: IProps) => {
 
     const [isPlaying, setIsPlaying] = useState(false)
 
+    const [trackDuration, setTrackDuration] = useState<number>(0)
+
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext
 
     console.log(">>>check currentTrack, setCurrentTrack wave.track:", currentTrack, setCurrentTrack)
@@ -77,6 +79,8 @@ const WaveTrack = (props: IProps) => {
 
     const wavesurfer = useWavesurfer(containerRef, optionsMemo);
 
+
+
     // On play button click
     const onPlayClick = useCallback(() => {
         if (wavesurfer) {
@@ -109,14 +113,12 @@ const WaveTrack = (props: IProps) => {
     ]
 
     const calLeft = (moment: number) => {
-        const hardCodeDuration = 199;
-        const percent = (moment / hardCodeDuration) * 100;
+        const percent = (moment / trackDuration) * 100;
         return `${percent}%`
     }
 
     useEffect(() => {
         if (!wavesurfer) return
-
         setIsPlaying(false)
 
         const timeEl = timeRef.current!;
@@ -130,7 +132,11 @@ const WaveTrack = (props: IProps) => {
         const subscriptions = [
             wavesurfer.on('play', () => setIsPlaying(true)),
             wavesurfer.on('pause', () => setIsPlaying(false)),
-            wavesurfer.on('decode', (duration) => (durationEl.textContent = formatTime(duration))),
+            wavesurfer.on('decode', (duration) => {
+                durationEl.textContent = formatTime(duration)
+                console.log(">>>check duration:", duration);
+                setTrackDuration(duration)
+            }),
             wavesurfer.on('timeupdate', (currentTime) => (timeEl.textContent = formatTime(currentTime))),
             wavesurfer.once('interaction', () => {
                 wavesurfer.play()
@@ -161,8 +167,6 @@ const WaveTrack = (props: IProps) => {
             wavesurfer.pause();
         }
     }, [currentTrack])
-
-
 
     return (
         <div style={{ marginTop: 20 }}>
