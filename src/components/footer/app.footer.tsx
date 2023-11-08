@@ -12,14 +12,9 @@ const AppFooter = () => {
     // console.log(">>> check env: FOOTER | ", process.env.NEXT_PUBLIC_BACKEND_URL)
     const hasMounted = useHasMounted();
     const playerRef = useRef(null)
-    if (!hasMounted) {
-        return (
-            <></> //fragment
-        )
-    }
-
     const { currentTrack, setCurrentTrack } = useContext(TrackContext) as ITrackContext
     console.log(">>>check track context:", currentTrack)
+
 
     if (playerRef?.current && currentTrack?.isPlaying === false) {
         //@ts-ignore
@@ -29,6 +24,13 @@ const AppFooter = () => {
         //@ts-ignore
         playerRef?.current?.audio?.current?.play();
     }
+
+    if (!hasMounted) {
+        return (
+            <></> //fragment
+        )
+    }
+
 
     return (
         <div style={{ marginTop: 50 }}>
@@ -53,7 +55,7 @@ const AppFooter = () => {
                     <AudioPlayer
                         ref={playerRef}
                         layout="horizontal-reverse"
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}`}
+                        src={currentTrack.trackUrl ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}` : ''}
                         volume={0.5}
                         style={{
                             backgroundColor: '#f2f2f2',
@@ -80,8 +82,8 @@ const AppFooter = () => {
                         minWidth: 100
                     }}
                     >
-                        <div style={{ color: '#ccc' }}>{currentTrack.title}</div>
-                        <div style={{ color: 'black' }}>{currentTrack.description}</div>
+                        <div style={{ color: '#ccc' }}>{currentTrack.description}</div>
+                        <div style={{ color: 'black' }}>{currentTrack.title}</div>
                     </div>
                 </Container>
             </AppBar>

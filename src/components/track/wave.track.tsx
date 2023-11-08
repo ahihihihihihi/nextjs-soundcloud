@@ -7,6 +7,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import './wave.scss';
 import Tooltip from '@mui/material/Tooltip';
+import { sendRequest } from '@/utils/api';
 
 
 const WaveTrack = () => {
@@ -23,7 +24,23 @@ const WaveTrack = () => {
 
     const fileName = searchParams.get('audio')
 
+    const id = searchParams.get('id')
+
     const [isPlaying, setIsPlaying] = useState(false)
+
+    const [trackInfo, setTrackInfo] = useState<ITrackTop | null>(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await sendRequest<IBackendRes<ITrackTop>>({
+                url: `http://localhost:8000/api/v1/tracks/${id}`,
+            })
+            if (res && res.data) {
+                setTrackInfo(res.data)
+            }
+        }
+        fetchData();
+    }, [id])
 
     const optionsMemo = useMemo((): Omit<WaveSurferOptions, 'container'> => {
 
@@ -195,7 +212,7 @@ const WaveTrack = () => {
                                 width: "fit-content",
                                 color: "white"
                             }}>
-                                Hỏi Dân IT's song
+                                {trackInfo?.title}
                             </div>
                             <div style={{
                                 padding: "0 5px",
@@ -206,7 +223,7 @@ const WaveTrack = () => {
                                 color: "white"
                             }}
                             >
-                                Eric
+                                {trackInfo?.description}
                             </div>
                         </div>
                     </div>
