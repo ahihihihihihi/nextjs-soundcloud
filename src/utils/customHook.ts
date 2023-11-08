@@ -90,9 +90,9 @@ export const useWavesurfer = (
 
         setWavesurfer(ws)
 
-        ws.on('click', () => {
-            ws.play()
-        })
+        // ws.on('click', () => {
+        //     ws.play()
+        // })
 
         return () => {
             ws.destroy()

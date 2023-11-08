@@ -7,10 +7,17 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import './wave.scss';
 import Tooltip from '@mui/material/Tooltip';
-import { sendRequest } from '@/utils/api';
+import { useTrackContext } from "@/lib/track.wrapper";
 
+interface IProps {
+    track: ITrackTop | null
+}
 
-const WaveTrack = () => {
+const WaveTrack = (props: IProps) => {
+
+    const { track } = props
+
+    console.log(">>>check track:", track)
 
     const containerRef = useRef<HTMLDivElement>(null)
 
@@ -24,23 +31,11 @@ const WaveTrack = () => {
 
     const fileName = searchParams.get('audio')
 
-    const id = searchParams.get('id')
-
     const [isPlaying, setIsPlaying] = useState(false)
 
-    const [trackInfo, setTrackInfo] = useState<ITrackTop | null>(null)
+    const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await sendRequest<IBackendRes<ITrackTop>>({
-                url: `http://localhost:8000/api/v1/tracks/${id}`,
-            })
-            if (res && res.data) {
-                setTrackInfo(res.data)
-            }
-        }
-        fetchData();
-    }, [id])
+    console.log(">>>check currentTrack, setCurrentTrack wave.track:", currentTrack, setCurrentTrack)
 
     const optionsMemo = useMemo((): Omit<WaveSurferOptions, 'container'> => {
 
@@ -137,9 +132,9 @@ const WaveTrack = () => {
             wavesurfer.on('pause', () => setIsPlaying(false)),
             wavesurfer.on('decode', (duration) => (durationEl.textContent = formatTime(duration))),
             wavesurfer.on('timeupdate', (currentTime) => (timeEl.textContent = formatTime(currentTime))),
-            // wavesurfer.once('interaction', () => {
-            //     wavesurfer.play()
-            // })
+            wavesurfer.once('interaction', () => {
+                wavesurfer.play()
+            })
 
         ]
 
@@ -154,6 +149,20 @@ const WaveTrack = () => {
         const paddedSeconds = `0${secondsRemainder}`.slice(-2)
         return `${minutes}:${paddedSeconds}`
     }
+
+    useEffect(() => {
+        if (track?._id && !currentTrack?._id) {
+            setCurrentTrack({ ...track, isPlaying: false })
+        }
+    }, [track])
+
+    useEffect(() => {
+        if (wavesurfer && currentTrack.isPlaying) {
+            wavesurfer.pause();
+        }
+    }, [currentTrack])
+
+
 
     return (
         <div style={{ marginTop: 20 }}>
@@ -180,6 +189,12 @@ const WaveTrack = () => {
                             <div
                                 onClick={() => {
                                     onPlayClick();
+                                    if (track && wavesurfer) {
+                                        setCurrentTrack({
+                                            ...currentTrack,
+                                            isPlaying: false
+                                        })
+                                    }
                                 }
                                 }
                                 style={{
@@ -212,7 +227,7 @@ const WaveTrack = () => {
                                 width: "fit-content",
                                 color: "white"
                             }}>
-                                {trackInfo?.title}
+                                {track?.title}
                             </div>
                             <div style={{
                                 padding: "0 5px",
@@ -223,7 +238,7 @@ const WaveTrack = () => {
                                 color: "white"
                             }}
                             >
-                                {trackInfo?.description}
+                                {track?.description}
                             </div>
                         </div>
                     </div>
@@ -282,6 +297,11 @@ const WaveTrack = () => {
                         width: 250,
                         height: 250
                     }}>
+                        <img
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track?.imgUrl}`}
+                            height={250}
+                            width={250}
+                        />
                     </div>
                 </div>
             </div>

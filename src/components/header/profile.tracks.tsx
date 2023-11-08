@@ -11,15 +11,16 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
-import { useContext } from 'react'
-import { TrackContext } from "@/lib/track.wrapper";
+import { useTrackContext } from "@/lib/track.wrapper";
 import Link from "next/link";
 
 const ProfileTracks = (props: any) => {
-    const { data } = props;
+
     const theme = useTheme();
 
-    const { currentTrack, setCurrentTrack } = useContext(TrackContext) as ITrackContext
+    const { data } = props;
+
+    const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext
 
     return (
         <Card sx={{ display: 'flex', justifyContent: "space-between" }}>
