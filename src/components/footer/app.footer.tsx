@@ -34,61 +34,66 @@ const AppFooter = () => {
 
 
     return (
-        <div style={{ marginTop: 50 }}>
-            <AppBar
-                position="fixed"
-                sx={{
-                    top: 'auto',
-                    bottom: 0,
-                    backgroundColor: '#f2f2f2',
-                }}
-            >
-                <Container sx={{
-                    display: 'flex',
-                    gap: '10px',
-                    '.rhap_main': {
-                        gap: '30px',
-                        '.rhap_controls-section': {
-                            gap: '10px',
-                        }
-                    }
-                }}>
-                    <AudioPlayer
-                        ref={playerRef}
-                        layout="horizontal-reverse"
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}`}
-                        volume={0.5}
-                        style={{
+        <>
+            {
+                currentTrack._id &&
+                <div style={{ marginTop: 50 }}>
+                    <AppBar
+                        position="fixed"
+                        sx={{
+                            top: 'auto',
+                            bottom: 0,
                             backgroundColor: '#f2f2f2',
-                            boxShadow: 'unset',
                         }}
-                        onPlay={() => {
-                            setCurrentTrack({
-                                ...currentTrack,
-                                isPlaying: true,
-                            })
-                        }}
-                        onPause={() => {
-                            setCurrentTrack({
-                                ...currentTrack,
-                                isPlaying: false,
-                            })
-                        }}
-                    />
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'start',
-                        minWidth: 100
-                    }}
                     >
-                        <div style={{ color: '#ccc' }}>{currentTrack.description}</div>
-                        <div style={{ color: 'black' }}>{currentTrack.title}</div>
-                    </div>
-                </Container>
-            </AppBar>
-        </div>
+                        <Container sx={{
+                            display: 'flex',
+                            gap: '10px',
+                            '.rhap_main': {
+                                gap: '30px',
+                                '.rhap_controls-section': {
+                                    gap: '10px',
+                                }
+                            }
+                        }}>
+                            <AudioPlayer
+                                ref={playerRef}
+                                layout="horizontal-reverse"
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}`}
+                                volume={0.5}
+                                style={{
+                                    backgroundColor: '#f2f2f2',
+                                    boxShadow: 'unset',
+                                }}
+                                onPlay={() => {
+                                    setCurrentTrack({
+                                        ...currentTrack,
+                                        isPlaying: true,
+                                    })
+                                }}
+                                onPause={() => {
+                                    setCurrentTrack({
+                                        ...currentTrack,
+                                        isPlaying: false,
+                                    })
+                                }}
+                            />
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'start',
+                                minWidth: 100
+                            }}
+                            >
+                                <div style={{ color: '#ccc' }}>{currentTrack.description}</div>
+                                <div style={{ color: 'black' }}>{currentTrack.title}</div>
+                            </div>
+                        </Container>
+                    </AppBar>
+                </div>
+            }
+        </>
     )
 }
 
