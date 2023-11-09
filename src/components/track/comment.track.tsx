@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import WaveSurfer from "wavesurfer.js";
 
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useHasMounted } from '@/utils/customHook';
 dayjs.extend(relativeTime)
 
 interface IProps {
@@ -19,6 +20,8 @@ interface IProps {
 const CommentTrack = (props: IProps) => {
 
     const router = useRouter();
+
+    const hasMounted = useHasMounted();
 
     const { comments, track, wavesurfer } = props;
     const [yourComment, setYourComment] = useState("");
@@ -115,7 +118,7 @@ const CommentTrack = (props: IProps) => {
                                     </div>
                                 </Box>
                                 <div style={{ fontSize: "12px", color: "#999" }}>
-                                    {dayjs(comment.createdAt).fromNow()}
+                                    {hasMounted && dayjs(comment.createdAt).fromNow()}
                                 </div>
                             </Box>
                         )
