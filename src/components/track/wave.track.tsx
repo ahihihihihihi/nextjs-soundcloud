@@ -8,6 +8,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import './wave.scss';
 import Tooltip from '@mui/material/Tooltip';
 import { useTrackContext } from "@/lib/track.wrapper";
+import { fetchDefaultImages } from '@/utils/api';
 
 interface IProps {
     track: ITrackTop | null
@@ -257,7 +258,7 @@ const WaveTrack = (props: IProps) => {
                                                     zIndex: 20,
                                                     left: calLeft(item.moment)
                                                 }}
-                                                src={`http://localhost:8000/images/chill1.png`}
+                                                src={fetchDefaultImages(item.user.type)}
                                             />
                                         </Tooltip>
                                     )
@@ -274,17 +275,22 @@ const WaveTrack = (props: IProps) => {
                         alignItems: "center"
                     }}
                 >
-                    <div style={{
-                        background: "#ccc",
-                        width: 250,
-                        height: 250
-                    }}>
-                        <img
-                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track?.imgUrl}`}
-                            height={250}
-                            width={250}
-                        />
-                    </div>
+
+                    {
+                        track?.imgUrl ?
+                            <img
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track?.imgUrl}`}
+                                height={250}
+                                width={250}
+                            />
+                            :
+                            <div style={{
+                                background: "#ccc",
+                                width: 250,
+                                height: 250
+                            }}></div>
+                    }
+
                 </div>
             </div>
         </div >

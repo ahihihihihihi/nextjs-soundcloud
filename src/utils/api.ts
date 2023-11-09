@@ -1,3 +1,4 @@
+import { type } from 'os';
 import queryString from 'query-string';
 
 export const sendRequest = async <T>(props: IRequest) => {
@@ -79,3 +80,14 @@ export const sendRequestFile = async <T>(props: IRequest) => {
         }
     });
 };
+
+export const fetchDefaultImages = (type: string) => {
+    if (type === 'GITHUB') {
+        return "/user/default-github.png";
+    }
+    if (type === 'GOOGLE') {
+        return "/user/default-google.png";
+    }
+    return "/user/default-user.png";
+};
+
