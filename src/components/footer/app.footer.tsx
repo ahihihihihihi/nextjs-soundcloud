@@ -46,16 +46,18 @@ const AppFooter = () => {
                             backgroundColor: '#f2f2f2',
                         }}
                     >
-                        <Container sx={{
-                            display: 'flex',
-                            gap: '10px',
-                            '.rhap_main': {
-                                gap: '30px',
-                                '.rhap_controls-section': {
-                                    gap: '10px',
+                        <Container
+                            disableGutters
+                            sx={{
+                                display: 'flex',
+                                gap: '10px',
+                                '.rhap_main': {
+                                    gap: '30px',
+                                    '.rhap_controls-section': {
+                                        gap: '10px',
+                                    }
                                 }
-                            }
-                        }}>
+                            }}>
                             <AudioPlayer
                                 ref={playerRef}
                                 layout="horizontal-reverse"
@@ -83,11 +85,31 @@ const AppFooter = () => {
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                                 alignItems: 'start',
-                                minWidth: 100
+                                width: '220px'
                             }}
                             >
-                                <div style={{ color: '#ccc' }}>{currentTrack.description}</div>
-                                <div style={{ color: 'black' }}>{currentTrack.title}</div>
+                                <div
+                                    style={{
+                                        color: '#ccc',
+                                        width: "100%",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        whiteSpace: "nowrap",
+                                    }}
+                                    title={currentTrack.description}
+                                >
+                                    {currentTrack.description}</div>
+                                <div
+                                    style={{
+                                        color: 'black',
+                                        width: "100%",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        whiteSpace: "nowrap",
+                                    }}
+                                    title={currentTrack.title}
+                                >
+                                    {currentTrack.title}</div>
                             </div>
                         </Container>
                     </AppBar>
