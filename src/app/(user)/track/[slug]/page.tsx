@@ -1,8 +1,6 @@
 import WaveTrack from '@/components/track/wave.track'
 import Container from '@mui/material/Container'
 import { sendRequest } from '@/utils/api';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/(user)/api/auth/[...nextauth]/route";
 
 
 import type { Metadata, ResolvingMetadata } from 'next'
@@ -17,8 +15,12 @@ export async function generateMetadata(
     parent: ResolvingMetadata
 ): Promise<Metadata> {
 
+    const temp = params?.slug?.split('.html') ?? []
+    const temp2 = (temp[0]?.split('-') ?? []) as string[]
+    const id = temp2[temp2.length - 1]
+
     const res = await sendRequest<IBackendRes<ITrackTop>>({
-        url: `http://localhost:8000/api/v1/tracks/${params.slug}`,
+        url: `http://localhost:8000/api/v1/tracks/${id}`,
         method: 'GET',
     })
 
@@ -37,12 +39,14 @@ hosting/master/eric.png`],
 
 
 const DetailTrackPage = async (props: any) => {
-    const session = await getServerSession(authOptions)
-    console.log(">>>check session DetailTrackPage", session)
     const { params } = props;
 
+    const temp = params?.slug?.split('.html') ?? []
+    const temp2 = (temp[0]?.split('-') ?? []) as string[]
+    const id = temp2[temp2.length - 1]
+
     const res = await sendRequest<IBackendRes<ITrackTop>>({
-        url: `http://localhost:8000/api/v1/tracks/${params.slug}`,
+        url: `http://localhost:8000/api/v1/tracks/${id}`,
         method: 'GET',
         nextOption: { cache: 'no-store' }
     })
@@ -50,13 +54,10 @@ const DetailTrackPage = async (props: any) => {
     const res1 = await sendRequest<IBackendRes<IModelPaginate<ITrackComment>>>({
         url: 'http://localhost:8000/api/v1/tracks/comments',
         method: 'POST',
-        // headers: {
-        //     'Authorization': `Bearer ${session}`
-        // },
         queryParams: {
             current: 1,
             pageSize: 100,
-            trackId: params.slug,
+            trackId: id,
             sort: "-createdAt"
         }
     })

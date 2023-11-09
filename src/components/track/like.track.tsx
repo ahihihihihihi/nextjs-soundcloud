@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { sendRequest } from '@/utils/api';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useToast } from '@/utils/toast';
 
 
 interface IProps {
@@ -14,6 +15,7 @@ const LikeTrack = (props: IProps) => {
     const { track } = props;
     const { data: session } = useSession();
     const router = useRouter();
+    const toast = useToast()
 
     const [trackLikes, setTrackLikes] = useState<ITrackLike[] | null>(null);
 
@@ -40,6 +42,9 @@ const LikeTrack = (props: IProps) => {
     }, [session])
 
     const handleLikeTrack = async () => {
+        if (!session) {
+            toast.error("you did not sign in!")
+        }
         await sendRequest<IBackendRes<IModelPaginate<ITrackLike>>>({
             url: `http://localhost:8000/api/v1/likes`,
             method: "POST",
