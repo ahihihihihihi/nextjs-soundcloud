@@ -13,6 +13,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { useTrackContext } from "@/lib/track.wrapper";
 import Link from "next/link";
+import { convertSlugUrl } from '@/utils/api';
 
 const ProfileTracks = (props: any) => {
 
@@ -27,7 +28,11 @@ const ProfileTracks = (props: any) => {
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                     <Link
-                        href={`/track/${data._id}?audio=${data.trackUrl}&id=${data._id}`}
+                        style={{
+                            textDecoration: "none",
+                            color: "unset"
+                        }}
+                        href={`/track/${convertSlugUrl(data.title)}-${data._id}.html?audio=${data.trackUrl}`}
                     >
                         <Typography component="div" variant="h5">
                             {data.title}
