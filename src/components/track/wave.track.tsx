@@ -8,9 +8,10 @@ import PauseIcon from '@mui/icons-material/Pause';
 import './wave.scss';
 import Tooltip from '@mui/material/Tooltip';
 import { useTrackContext } from "@/lib/track.wrapper";
-import { fetchDefaultImages } from '@/utils/api';
+import { fetchDefaultImages, sendRequest } from '@/utils/api';
 import CommentTrack from './comment.track';
 import LikeTrack from './like.track';
+import { useRouter } from "next/navigation";
 
 interface IProps {
     track: ITrackTop | null
@@ -22,6 +23,10 @@ const WaveTrack = (props: IProps) => {
     const { track, comments } = props
 
     console.log(">>>check track:", track)
+
+    const router = useRouter();
+
+    const firstViewRef = useRef(true)
 
     const containerRef = useRef<HTMLDivElement>(null)
 
@@ -150,6 +155,21 @@ const WaveTrack = (props: IProps) => {
         }
     }, [currentTrack])
 
+    const handleIncreaseView = async () => {
+        if (firstViewRef.current) {
+            await sendRequest<IBackendRes<IModelPaginate<ITrackLike>>>({
+                url: `http://localhost:8000/api/v1/tracks/increase-view`,
+                method: "POST",
+                body: {
+                    trackId: track?._id
+                }
+            })
+            router.refresh()
+            firstViewRef.current = false
+        }
+
+    }
+
     return (
         <div style={{ marginTop: 20 }}>
             <div
@@ -175,6 +195,7 @@ const WaveTrack = (props: IProps) => {
                             <div
                                 onClick={() => {
                                     onPlayClick();
+                                    handleIncreaseView()
                                     if (track && wavesurfer) {
                                         setCurrentTrack({
                                             ...currentTrack,
