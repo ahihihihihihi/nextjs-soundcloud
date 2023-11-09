@@ -11,11 +11,12 @@ import { useTrackContext } from "@/lib/track.wrapper";
 
 interface IProps {
     track: ITrackTop | null
+    comments: ITrackComment[] | null
 }
 
 const WaveTrack = (props: IProps) => {
 
-    const { track } = props
+    const { track, comments } = props
 
     console.log(">>>check track:", track)
 
@@ -87,30 +88,6 @@ const WaveTrack = (props: IProps) => {
             wavesurfer.isPlaying() ? wavesurfer.pause() : wavesurfer.play();
         }
     }, [wavesurfer])
-
-    const arrComments = [
-        {
-            id: 1,
-            avatar: "http://localhost:8000/images/chill1.png",
-            moment: 10,
-            user: "username 1",
-            content: "just a comment1"
-        },
-        {
-            id: 2,
-            avatar: "http://localhost:8000/images/chill1.png",
-            moment: 30,
-            user: "username 2",
-            content: "just a comment2"
-        },
-        {
-            id: 3,
-            avatar: "http://localhost:8000/images/chill1.png",
-            moment: 50,
-            user: "username 3",
-            content: "just a comment3"
-        },
-    ]
 
     const calLeft = (moment: number) => {
         const percent = (moment / trackDuration) * 100;
@@ -264,9 +241,10 @@ const WaveTrack = (props: IProps) => {
                             style={{ position: "relative" }}
                         >
                             {
-                                arrComments.map(item => {
+                                comments &&
+                                comments.map(item => {
                                     return (
-                                        <Tooltip title={item.content} arrow key={item.id}>
+                                        <Tooltip title={item.content} arrow key={item._id}>
                                             <img
                                                 onPointerMove={(e) => {
                                                     const hover = hoverRef.current!;
