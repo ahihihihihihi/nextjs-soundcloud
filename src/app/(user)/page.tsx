@@ -3,7 +3,12 @@ import { Container } from "@mui/material";
 import { sendRequest } from "@/utils/api";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/(user)/api/auth/[...nextauth]/route";
+import type { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'clone soundcloud',
+  description: 'practise nextjs',
+}
 
 export default async function HomePage() {
 

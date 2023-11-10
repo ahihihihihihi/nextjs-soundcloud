@@ -9,6 +9,7 @@ import WaveSurfer from "wavesurfer.js";
 
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useHasMounted } from '@/utils/customHook';
+import Image from 'next/image';
 dayjs.extend(relativeTime)
 
 interface IProps {
@@ -84,10 +85,10 @@ const CommentTrack = (props: IProps) => {
             </div>
             <div style={{ display: "flex", gap: "10px" }}>
                 <div className='left' style={{ width: "190px" }}>
-                    <img
-                        style={{
-                            height: 150, width: 150,
-                        }}
+                    <Image
+                        alt='avatar comment'
+                        width={150}
+                        height={150}
                         src={fetchDefaultImages(track?.uploader?.type!)}
                     />
                     <div>{track?.uploader?.email}</div>
@@ -97,11 +98,10 @@ const CommentTrack = (props: IProps) => {
                         return (
                             <Box key={comment._id} sx={{ display: "flex", gap: "10px", justifyContent: "space-between" }}>
                                 <Box sx={{ display: "flex", gap: "10px", marginBottom: "25px", alignItems: "center" }}>
-                                    <img
-                                        style={{
-                                            height: 40, width: 40,
-
-                                        }}
+                                    <Image
+                                        width={40}
+                                        height={40}
+                                        alt='comments'
                                         src={fetchDefaultImages(comment.user.type)}
                                     />
                                     <div>

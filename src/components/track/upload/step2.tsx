@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useSession } from "next-auth/react"
 import { sendRequest } from '@/utils/api';
 import { useToast } from '@/utils/toast';
+import Image from 'next/image';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -198,10 +199,11 @@ const Step2 = (props: IProps) => {
                     <div style={{ height: 250, width: 250, background: "#ccc" }}>
                         <div>
                             {info.imgUrl &&
-                                <img
+                                <Image
                                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${info.imgUrl}`}
                                     height={250}
                                     width={250}
+                                    alt='track image'
                                 />
                             }
                         </div>

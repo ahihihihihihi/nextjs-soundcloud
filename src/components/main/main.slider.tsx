@@ -122,7 +122,7 @@ const MainSlider = (props: IProps) => {
                                 <div style={{
                                     position: "relative",
                                     height: "150px",
-                                    width: "100%"
+                                    width: "150px"
                                 }}
                                 >
                                     {/* <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} /> */}
