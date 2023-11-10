@@ -12,6 +12,10 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
 
+  // demo error
+  // const a = 1
+  // console.log(a.b.c)
+
   const session = await getServerSession(authOptions)
   // console.log(">>>check session server:", session)
 

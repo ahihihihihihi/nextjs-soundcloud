@@ -4,6 +4,7 @@ import { sendRequest } from '@/utils/api';
 
 
 import type { Metadata, ResolvingMetadata } from 'next'
+import { notFound } from 'next/navigation';
 
 type Props = {
     params: { slug: string }
@@ -61,6 +62,14 @@ const DetailTrackPage = async (props: any) => {
             sort: "-createdAt"
         }
     })
+
+    // demo error
+    // const a = 1
+    // console.log(a.b.c)
+
+    if (!res.data) {
+        notFound()
+    }
 
     console.log(">>>check res DetailTrackPage", res)
     console.log(">>>check res DetailTrackPage1", res1)
