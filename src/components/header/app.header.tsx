@@ -94,7 +94,7 @@ export default function AppHeader() {
     const handleMenuClose = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
-        signOut();
+
     };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -149,9 +149,9 @@ export default function AppHeader() {
             }}
         >
             <MenuItem>
-                <Link href={`/profile/${session?.user._id}`}>Profile</Link>
+                <Link onClick={() => { handleMenuClose(); }} href={`/profile/${session?.user._id}`}>Profile</Link>
             </MenuItem>
-            <MenuItem><a onClick={() => handleMenuClose()} href={"#"}>Log out</a></MenuItem>
+            <MenuItem><a onClick={() => { handleMenuClose(); signOut(); }} href={"#"}>Log out</a></MenuItem>
         </Menu>
     );
 
