@@ -31,8 +31,6 @@ yarn-error.log*
 .env.development
 .env.production
 
-# docker files
-docker-compose.yml
 
 # vercel
 .vercel
