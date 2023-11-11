@@ -13,7 +13,7 @@ const AppFooter = () => {
     const hasMounted = useHasMounted();
     const playerRef = useRef(null)
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext
-    console.log(">>>check track context footer:", currentTrack)
+    // console.log(">>>check track context footer:", currentTrack)
 
     useEffect(() => {
         if (currentTrack?.isPlaying === false) {

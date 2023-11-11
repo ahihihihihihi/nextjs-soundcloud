@@ -23,7 +23,7 @@ const WaveTrack = (props: IProps) => {
 
     const { track, comments } = props
 
-    console.log(">>>check track:", track)
+    // console.log(">>>check track:", track)
 
     const router = useRouter();
 
@@ -47,7 +47,7 @@ const WaveTrack = (props: IProps) => {
 
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext
 
-    console.log(">>>check currentTrack, setCurrentTrack wave.track:", currentTrack, setCurrentTrack)
+    // console.log(">>>check currentTrack, setCurrentTrack wave.track:", currentTrack, setCurrentTrack)
 
     const optionsMemo = useMemo((): Omit<WaveSurferOptions, 'container'> => {
 
@@ -122,7 +122,7 @@ const WaveTrack = (props: IProps) => {
             wavesurfer.on('pause', () => setIsPlaying(false)),
             wavesurfer.on('decode', (duration) => {
                 durationEl.textContent = formatTime(duration)
-                console.log(">>>check duration:", duration);
+                // console.log(">>>check duration:", duration);
                 setTrackDuration(duration)
             }),
             wavesurfer.on('timeupdate', (currentTime) => (timeEl.textContent = formatTime(currentTime))),
@@ -159,7 +159,7 @@ const WaveTrack = (props: IProps) => {
     const handleIncreaseView = async () => {
         if (firstViewRef.current) {
             await sendRequest<IBackendRes<IModelPaginate<ITrackLike>>>({
-                url: `http://localhost:8000/api/v1/tracks/increase-view`,
+                url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/increase-view`,
                 method: "POST",
                 body: {
                     trackId: track?._id

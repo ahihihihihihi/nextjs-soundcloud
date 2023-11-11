@@ -54,7 +54,7 @@ const AuthSignIn = (props: any) => {
             password: password,
             redirect: false
         })
-        console.log(">>>check res signIn credentials:", res)
+        // console.log(">>>check res signIn credentials:", res)
         if (!res?.error) {
             // console.log(">>>check history length:", history.length);
             if (history.length === 2) {
