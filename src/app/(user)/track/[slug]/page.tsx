@@ -46,6 +46,8 @@ const DetailTrackPage = async (props: any) => {
     const temp2 = (temp[0]?.split('-') ?? []) as string[]
     const id = temp2[temp2.length - 1]
 
+    // await new Promise(resolve => setTimeout(resolve, 3000))
+
     const res = await sendRequest<IBackendRes<ITrackTop>>({
         url: `http://localhost:8000/api/v1/tracks/${id}`,
         method: 'GET',
