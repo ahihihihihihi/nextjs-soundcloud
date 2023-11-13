@@ -12,6 +12,9 @@ const ProfilePage = async ({ params }: { params: { slug: string } }) => {
     method: 'POST',
     body: {
       id: params.slug
+    },
+    nextOption: {
+      next: { tags: ['track-by-profile'] }
     }
   })
 

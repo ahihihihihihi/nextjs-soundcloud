@@ -168,6 +168,15 @@ const Step2 = (props: IProps) => {
             // alert("create a track successfully!")
             toast.success("create a track successfully!")
             setValue(0)
+
+            await sendRequest<IBackendRes<any>>({
+                url: `/api/revalidate`,
+                method: "POST",
+                queryParams: {
+                    tag: 'track-by-profile',
+                    secret: 'justASecretForJWT'
+                }
+            })
         } else {
             // alert(res.message)
             toast.error(res.message)
