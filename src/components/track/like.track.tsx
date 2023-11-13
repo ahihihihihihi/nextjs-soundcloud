@@ -57,7 +57,6 @@ const LikeTrack = (props: IProps) => {
             },
         })
 
-        fetchData();
 
         await sendRequest<IBackendRes<any>>({
             url: `/api/revalidate`,
@@ -67,6 +66,8 @@ const LikeTrack = (props: IProps) => {
                 secret: 'justASecretForJWT'
             }
         })
+
+        fetchData();
 
         router.refresh();
 
