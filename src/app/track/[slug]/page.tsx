@@ -6,6 +6,7 @@ import { sendRequest } from '@/utils/api';
 import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation';
 
+
 type Props = {
     params: { slug: string }
     searchParams: { [key: string]: string | string[] | undefined }
@@ -38,6 +39,15 @@ hosting/master/eric.png`],
     }
 }
 
+export async function generateStaticParams() {
+
+    return [
+        { slug: 'sau-con-mua-653780cdee9a5c8798c20046.html' },
+        { slug: 'nu-hon-bisou-653780cdee9a5c8798c20042.html' },
+        { slug: 'song-cho-het-doi-thanh-xuan-653780cdee9a5c8798c20049.html' },
+
+    ]
+}
 
 const DetailTrackPage = async (props: any) => {
     const { params } = props;
@@ -51,7 +61,7 @@ const DetailTrackPage = async (props: any) => {
     const res = await sendRequest<IBackendRes<ITrackTop>>({
         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/${id}`,
         method: 'GET',
-        nextOption: { cache: 'no-store' }
+        // nextOption: { cache: 'no-store' }
     })
 
     const res1 = await sendRequest<IBackendRes<IModelPaginate<ITrackComment>>>({
