@@ -17,6 +17,8 @@ declare module "next-auth/jwt" {
         user: IUser,
         access_token: string,
         refresh_token: string,
+        access_expire: number,
+        error: string,
     }
 }
 
@@ -28,11 +30,15 @@ declare module "next-auth" {
         user: IUser & DefaultSession['user'],
         access_token: string,
         refresh_token: string,
+        access_expire: number,
+        error: string,
     }
 
     interface DefaultUser {
         user: IUser & DefaultSession['user'],
         access_token: string,
         refresh_token: string,
+        access_expire: number,
+        error: string,
     }
 }
