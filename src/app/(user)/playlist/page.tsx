@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { sendRequest } from "@/utils/api";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/(user)/api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/auth.options";
 import { Fragment } from 'react';
 import type { Metadata } from 'next'
 import NewPlaylist from "@/components/playlist/new.playlist";

@@ -8,7 +8,7 @@ import { convertSlugUrl, sendRequest } from '@/utils/api';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from '../api/auth/auth.options';
 
 export const metadata: Metadata = {
   title: 'Tracks bạn đã liked',

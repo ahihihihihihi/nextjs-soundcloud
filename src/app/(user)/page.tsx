@@ -2,7 +2,7 @@ import MainSlider from "@/components/main/main.slider";
 import { Container } from "@mui/material";
 import { sendRequest } from "@/utils/api";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/(user)/api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/auth.options";
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
