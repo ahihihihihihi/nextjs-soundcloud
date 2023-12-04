@@ -6,6 +6,7 @@ import { sendRequest } from '@/utils/api';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from '@/utils/toast';
+import { handleLikeTrackAction } from '@/utils/action/actions';
 
 
 interface IProps {
@@ -45,27 +46,11 @@ const LikeTrack = (props: IProps) => {
         if (!session) {
             toast.error("you did not sign in!")
         }
-        await sendRequest<IBackendRes<IModelPaginate<ITrackLike>>>({
-            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/likes`,
-            method: "POST",
-            body: {
-                track: track?._id,
-                quantity: trackLikes?.some(t => t._id === track?._id) ? -1 : 1,
-            },
-            headers: {
-                Authorization: `Bearer ${session?.access_token}`,
-            },
-        })
 
+        const id = track?._id
+        const quantity = trackLikes?.some(t => t._id === track?._id) ? -1 : 1
 
-        await sendRequest<IBackendRes<any>>({
-            url: `/api/revalidate`,
-            method: "POST",
-            queryParams: {
-                tag: 'track-by-id',
-                secret: 'justASecretForJWT'
-            }
-        })
+        await handleLikeTrackAction(id, quantity)
 
         fetchData();
 
